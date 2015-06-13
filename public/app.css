@@ -104,13 +104,19 @@ body {
 /* mansory */
 .grid-item { 
   width: 230px;
-  height: 100px;
+  margin-bottom: 10px;
 }
 .grid-item--width2 { 
   width: 230px;
-  height: 200px;
   background-color: #FF951D;
+}
 
+.height-1 {
+  height: 100px;
+}
+
+.height-2 {
+  height: 210px;  
 }
 
 .light-blue-box {
@@ -143,6 +149,7 @@ body {
 
 .mansory {
   color: #FFFFFF;
+  line-height: 1.2em
 }
 
 .top-box-part {
@@ -151,11 +158,16 @@ body {
 
 .iconContainer {
   float: left;
+  width: 35px;
+  padding-left: 10px;
+  margin-right: 10px;
 } 
 
 .textContainer {
   float: left;
   margin-left: 10px;
+  padding-right: 10px;
+  width: 170px;
 }
 
 .ctaContainer {
