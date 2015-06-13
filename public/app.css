@@ -18,6 +18,20 @@ body {
  color: #F97137; 
 }
 
+.bank-amount {
+  margin-bottom: 20px;
+}
+
+.amount {
+ font-size: 24px; 
+}
+
+.description ul {
+  margin-left: 120px;
+  margin-top: 20px;
+  line-height: 1.5
+}
+
 .green-title {
  color: #A9E1B7; 
 }
