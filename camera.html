@@ -1,0 +1,100 @@
+<html>
+	<head>
+	<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="bower_components/highcharts-release/highcharts.js"></script>
+	<script type="text/javascript" src="bower_components/highcharts-release/highcharts-more.js"></script>
+	<script type="text/javascript" src="bower_components/highcharts-release/modules/exporting.js"></script>
+	</head>
+	<body>
+
+		<canvas id="circlelyse" width="204" height="204"></canvas>
+
+
+
+	</body>
+
+	<script type="text/javascript">
+		$("#cam").change(function () { 
+			file = this.files[0];
+			fr = new FileReader();
+			fr.onload = receivedText;
+			//fr.readAsText(file);
+			fr.readAsDataURL(file);
+	  });
+
+		$(function() { 
+
+			var _startAngle = -.5*Math.PI;
+
+			/** Draw an "Elyse" circle on the canvas element _el, with a savings in percent.
+
+			    Ex: drawCircle(document.getElementById("circlelyse"), 71);
+			*/
+
+
+			var drawCircle = function(_el, forecast_savings, anim) {
+				if (!anim) {
+					anim = 1;
+				}
+
+				var endAngle = (1 - forecast_savings / 50) * Math.PI - _startAngle *2;
+				var ctx = _el.getContext("2d");
+				ctx.clearRect(0, 0, _el.width, _el.height);
+
+				// gray circle
+			    ctx.strokeStyle="#eaeaea";
+			    ctx.beginPath();
+			    ctx.lineWidth = 14;
+			    ctx.arc(102, 102, 84, _startAngle, 1.5*Math.PI * anim);
+			    ctx.stroke();
+
+			    // green circle
+			    ctx.strokeStyle="#92dba4";
+			    ctx.beginPath();
+			    ctx.lineWidth = 10;
+			    ctx.arc(102, 102, 96, _startAngle, _startAngle + endAngle * anim);
+			    ctx.stroke();
+
+			    // red circle
+			    ctx.strokeStyle="#ff5349";
+			    ctx.beginPath();
+			    ctx.lineWidth = 10;
+			    ctx.arc(102, 102, 72, _startAngle + endAngle * anim, _startAngle);
+			    ctx.stroke();
+
+			    // center text
+				ctx.font = "36px Arial";
+				ctx.textAlign = "center";
+				ctx.textBaseline = 'middle';
+				ctx.fillStyle="#cccccc";
+				ctx.fillText(forecast_savings + "%", 102, 96);
+
+				ctx.font = "12px Arial";
+				ctx.fillText("forecast savings", 102, 120);
+			};
+
+			var animateCircleInto = function (_el, forecast_savings, duration) {
+				var _animCB = null;
+				var _animStart = null;
+
+				var step = function (timestamp) {
+					if (!_animStart) {
+						_animStart = timestamp;
+					}
+					var progress = (timestamp - _animStart) / duration;
+					drawCircle(_el, forecast_savings, progress);
+					
+					if (progress < 1) {
+						window.requestAnimationFrame(step);
+					}
+				};
+
+				window.requestAnimationFrame(step);
+			};
+
+			animateCircleInto(document.getElementById("circlelyse"), 50, 1000);
+
+			
+		});
+	</script>
+</html>
