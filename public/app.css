@@ -1,10 +1,28 @@
 body {
   font-family: 'Montserrat', sans-serif;
+  position: relative;
+}
+
+.icons {
+  position: absolute;
+  top: -5px;
+  right: 20px;
+}
+
+.tab-container {
+  margin-top: 15px;
+  padding-left: 5px;
+  border-bottom: 1px solid #CCC;
+}
+
+.tab-container .nav-tabs {
+ border-bottom: 0px; 
 }
 
 .header-row {
   color: #CCCCCC;
-  margin-bottom: 20px; 
+  margin-bottom: 30px; 
+  margin-top: 30px;
 }
 
 .colored-row {
@@ -43,3 +61,34 @@ body {
 .gray {
  color: #CCCCCC; 
 }
+
+/* Progress bar */
+.progress-blue {
+  background-color: #AAC8E2;
+}
+.progress-bar-blue {
+  background-color: #5FA2F9;
+}
+
+.progress-red {
+  background-color: #FC4941;
+}
+
+.progress-bar-green {
+  background-color: #92DBA4;
+}
+
+.progress-yellow {
+  background-color: #FFC803;
+}
+
+.progress-bar-pink {
+  background-color: #F7458F;
+}
+
+.progress > span {
+  float: right;
+  color: #FFFFFF;
+  padding-right: 10px;
+}
+
