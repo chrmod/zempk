@@ -1,1 +1,7 @@
 <h1>Example App: Ho</h1>
+<div class="text"></div>
+<script type="text/javascript">
+  $.ajax('/figo').done(function(resp) {
+    $('.text').text(resp.a);  
+  });
+</script>
