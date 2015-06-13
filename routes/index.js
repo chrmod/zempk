@@ -1,9 +1,15 @@
 var express = require('express');
 var router = express.Router();
+var figoTransactions = require('../libs/figo-transactions');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  figoTransactions(function (transactions) {
+    res.render('index', {
+      title: 'Hello World!',
+      transactions: transactions,
+    });
+  });
 });
 
 router.get('/demo', function(req, res, next) {
