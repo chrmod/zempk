@@ -1,6 +1,8 @@
 package android.impakt.de.impakt;
 
 import android.content.Intent;
+import android.os.Build;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -9,6 +11,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import net.gini.android.models.Extraction;
@@ -34,11 +38,23 @@ public class MainActivity extends ActionBarActivity {
     public static final String EXTRA_EXTRACTIONS = "extractions";
 
     private static final String TAG = "MainActivity";
+    private WebView mWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mWebView = (WebView)findViewById(R.id.webview);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && BuildConfig.DEBUG) {
+            mWebView.setWebContentsDebuggingEnabled(true);
+        }
+
+        final WebSettings settings = mWebView.getSettings();
+        // settings.setAllowUniversalAccessFromFileURLs(true);
+        settings.setJavaScriptEnabled(true);
+        mWebView.loadUrl("http://172.20.128.217:3000");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
         setSupportActionBar(toolbar);
@@ -56,6 +72,18 @@ public class MainActivity extends ActionBarActivity {
             extractionMap.put(key, extraction);
         }
         return extractionMap;
+    }
+
+    /**
+     * Evaluate JS in web context
+     * @param js JS command
+     */
+    private void executeJS(final String js) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            mWebView.evaluateJavascript(js, null);
+        } else {
+            mWebView.loadUrl("javascript:" + js);
+        }
     }
 
     @Override
@@ -81,17 +109,41 @@ public class MainActivity extends ActionBarActivity {
 
             if (extractionMap != null && extractionMap.containsKey("amountToPay")) {
                 final SpecificExtraction ex = extractionMap.get("amountToPay");
-                final List<Extraction> candidate = ex.getCandidate();
-                Log.d(TAG, "Price: " + ex.getValue());
+
+                final String value = ex.getValue();
+                final float price;
+
+                try {
+                    if (value.contains(":")) {
+                        price = Float.parseFloat(value.substring(0, value.indexOf(":")));
+                    } else {
+                        price = Float.parseFloat(value);
+                    }
+
+                    executeJS("addCustomTransaction(" + price + ")");
+
+                    Snackbar
+                            .make(mWebView, getResources().getString(R.string.scan_you_spent_money, price), Snackbar.LENGTH_LONG)
+                            .show(); // Don’t forget to show!
+                    Log.d(TAG, "Price: " + ex.getValue());
+                } catch (Exception e) {
+                    Log.e(TAG, "Cannot parse price", e);
+                }
+            } else {
+                Snackbar
+                        .make(mWebView, R.string.scan_couldnt_find_price, Snackbar.LENGTH_LONG)
+                        .show(); // Don’t forget to show!
             }
         } else if (requestCode == IMAGE_REQUEST && resultCode == ScannerActivity.RESULT_ERROR) {
             final ScannerActivity.Error error = data.getParcelableExtra(ScannerActivity.EXTRA_ERROR);
-            final Toast toast = Toast.makeText(this, "Error! " + error.toString(), Toast.LENGTH_LONG);
-            toast.show();
+            Snackbar
+                    .make(mWebView, getResources().getString(R.string.scan_error_, error.toString()), Snackbar.LENGTH_LONG)
+                    .show(); // Don’t forget to show!
         } else if (requestCode == IMAGE_REQUEST && resultCode == UploadActivity.RESULT_UPLOAD_ERROR) {
             final String error = data.getStringExtra(UploadActivity.EXTRA_ERROR_STRING);
-            final Toast toast = Toast.makeText(this, "Getting the extractions failed! " + error, Toast.LENGTH_LONG);
-            toast.show();
+            Snackbar
+                    .make(mWebView, getResources().getString(R.string.scan_error_, error.toString()), Snackbar.LENGTH_LONG)
+                    .show(); // Don’t forget to show!
         }
     }
 
