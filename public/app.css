@@ -8,15 +8,22 @@ body {
 }
 
 .icons {
-  position: absolute;
-  top: -5px;
-  right: 20px;
+  position: fixed;
+  right: 40px;
+  z-index: 2000;
 }
 
+.header-container {
+  padding-top: 70px;
+ }
 .tab-container {
-  margin-top: 15px;
+  background: #ffffff none repeat scroll 0 0;
+  border-bottom: 1px solid #ccc;
   padding-left: 5px;
-  border-bottom: 1px solid #CCC;
+  padding-top: 15px;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
 }
 
 .tab-container .nav-tabs {
