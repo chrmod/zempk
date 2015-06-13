@@ -1,0 +1,15 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Set AppCompat’s actionBarStyle -->
+
+        <!-- Set AppCompat’s color theming attrs -->
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="windowActionBar">false</item>
+    <!-- <item name="colorPrimaryDark">@color/my_awesome_darker_red</item> -->
+
+    <!-- The rest of your attributes -->
+    </style>
+
+</resources>

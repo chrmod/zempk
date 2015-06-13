@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Impakt</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="title_activity_upload">Doing some magic</string>
+    <string name="gini_api_client_id">burda-hackday-03</string>
+    <string name="gini_api_client_secret">mLt7mYFyaFauQsCyn0NaZ8FdxoQM</string>
+</resources>
