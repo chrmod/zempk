@@ -8,6 +8,7 @@ var _data = null;
 var _yr = 0, _cp = [], _future = [], _interest = 0.05;
 var _lastTS = 0;
 var _goal = 1000000;
+var _currentLegend = undefined, _currentMoneySaved = 0; 
 
 var fetchFigo = function () {
 
@@ -36,6 +37,13 @@ var fetchFigo = function () {
     });
 };
 
+var addCustomTransaction = function(amount) {
+    _data.current_balance += amount;
+    _data.transactions.push({"date":Date.now(), "amount": amount});
+    crunchData();
+    renderChart(_currentMoneySaved, _currentLegend);
+}
+
 var projectFuture = function (year, yearlyIncome, lastTS, balance, _chartPoints) {
     var incompleteYear = true;
     var yearEnd = new Date(year, 11, 31, 23, 59, 59);
@@ -55,7 +63,7 @@ var projectFuture = function (year, yearlyIncome, lastTS, balance, _chartPoints)
         balance += savings;
         if (_chartPoints) {
             if (balance >= _goal) {
-                var goalPercent = (balance - _goal) / (balance - lastBalance);
+                var goalPercent = 1 - (balance - _goal) / (balance - lastBalance);
                 var goalTime = 365 * goalPercent;
                 var baseDate = new Date(year, 0, 0, 0, 0, 0).getTime() + (goalPercent * 1000 * 24 * 3600 * 365);
                 _chartPoints.push([
@@ -119,6 +127,8 @@ var crunchData = function() {
 };
 
 var renderChart = function(moneySaved, legend) {
+    _currentLegend = legend;
+    _currentMoneySaved = moneySaved;
 
     var year = new Date(_lastTS).getFullYear();
 
