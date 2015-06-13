@@ -105,6 +105,7 @@ body {
 .grid-item { 
   width: 230px;
   margin-bottom: 10px;
+  border-radius: 5px;
 }
 .grid-item--width2 { 
   width: 230px;
@@ -173,7 +174,10 @@ body {
 .ctaContainer {
   border-top: 1px solid #fff;
   padding: 10px 0px; 
-  text-align: center
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
 }
 
 .ctaContainer .btn {
