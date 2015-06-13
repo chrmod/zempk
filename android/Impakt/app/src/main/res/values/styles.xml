@@ -7,7 +7,7 @@
         <!-- Set AppCompat’s color theming attrs -->
         <item name="colorPrimary">@color/primary_color</item>
         <item name="windowActionBar">false</item>
-    <!-- <item name="colorPrimaryDark">@color/my_awesome_darker_red</item> -->
+        <item name="colorPrimaryDark">@color/primary_color_dark</item>
 
     <!-- The rest of your attributes -->
     </style>

@@ -3,19 +3,15 @@ package android.impakt.de.impakt;
 import android.content.Intent;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.Toast;
 
-import net.gini.android.models.Extraction;
 import net.gini.android.models.SpecificExtraction;
 import net.gini.android.vision.BitmapFuture;
 import net.gini.android.vision.CaptureActivity;
@@ -26,7 +22,6 @@ import org.jetbrains.annotations.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -58,6 +53,8 @@ public class MainActivity extends ActionBarActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setLogo(R.drawable.makebank);
     }
 
     @NotNull
