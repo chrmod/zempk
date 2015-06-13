@@ -145,7 +145,7 @@ var renderChart = function(moneySaved, legend, color) {
             color: color
         };
         var year = new Date(_lastTS).getFullYear();
-        var out = projectFuture(year, _yr + moneySaved*365, _lastTS, _data.current_balance, _slower);
+        var out = projectFuture(year, _yr + moneySaved, _lastTS, _data.current_balance, _slower);
     }
 
     
@@ -200,6 +200,18 @@ var renderChart = function(moneySaved, legend, color) {
 
 $(function() {
     fetchFigo();
+
+    $("span[data-percent]").click(function() {
+        if (!_yr) {
+            return;
+        }
+        var $this = $(this);
+        var percent = (+$this.attr("data-percent") / 100);
+        var color = $this.attr("data-color");
+        var legend = $this.attr("data-legend");
+
+        renderChart(percent * _yr, legend, color);
+    });
 });
 
 </script>
