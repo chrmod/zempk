@@ -7,8 +7,10 @@
 var _data = null;
 var _yr = 0, _cp = [], _future = [], _interest = 0.05;
 var _lastTS = 0;
-var _goal = 1000000;
+var _goal = 1000000, _goldenGoal = _goal * 0.62;
 var _currentLegend = undefined, _currentMoneySaved = 0; 
+var _chartEndDate = null;
+var _chartGoldenDate = null;
 
 var fetchFigo = function () {
 
@@ -49,6 +51,7 @@ var projectFuture = function (year, yearlyIncome, lastTS, balance, _chartPoints)
     var yearEnd = new Date(year, 11, 31, 23, 59, 59);
     var loopCounter = 0;
     var lastBalance = balance;
+    _chartGoldenDate = null;
     while (balance < _goal && loopCounter < 100) {
         var roi = balance * _interest;
         var savings;
@@ -62,12 +65,17 @@ var projectFuture = function (year, yearlyIncome, lastTS, balance, _chartPoints)
         }
         balance += savings;
         if (_chartPoints) {
+            if (balance >= _goldenGoal && !_chartGoldenDate) {
+                var goalPercent = 1 - (balance - _goldenGoal) / (balance - lastBalance);
+                var goalTime = 365 * goalPercent;
+                _chartGoldenDate = new Date(year, 0, 0, 0, 0, 0).getTime() + (goalPercent * 1000 * 24 * 3600 * 365);
+            }
             if (balance >= _goal) {
                 var goalPercent = 1 - (balance - _goal) / (balance - lastBalance);
                 var goalTime = 365 * goalPercent;
-                var baseDate = new Date(year, 0, 0, 0, 0, 0).getTime() + (goalPercent * 1000 * 24 * 3600 * 365);
+                _chartEndDate = new Date(year, 0, 0, 0, 0, 0).getTime() + (goalPercent * 1000 * 24 * 3600 * 365);
                 _chartPoints.push([
-                    baseDate, _goal / 1000]);
+                    _chartEndDate, _goal / 1000]);
             } else {
                 _chartPoints.push([
                     new Date(year++, 11, 31, 23, 59, 59).getTime(), Math.round(balance / 10) / 100]);
@@ -78,7 +86,8 @@ var projectFuture = function (year, yearlyIncome, lastTS, balance, _chartPoints)
 
     return {
         "balance": balance,
-        "year": year
+        "year": year,
+        "endDate": _chartEndDate
     };
 
 }
@@ -148,13 +157,21 @@ var renderChart = function(moneySaved, legend, color) {
             spacingRight: 0
         },
         xAxis: {
-            type: 'datetime'
+            type: 'datetime',
+            plotLines: [
+                {
+                    color: '#FFC802',
+                    width: 2,
+                    value: _chartGoldenDate
+                }
+            ]
         },
         yAxis: {
             title: {
                 text: null
             },
-            plotLines: []
+            plotLines: [],
+            maxPadding: 0.01
         },
         tooltip: {
             headerFormat: '<b>{series.name}</b><br>',
@@ -164,12 +181,12 @@ var renderChart = function(moneySaved, legend, color) {
                 name: 'Past',
                 data: _cp,
                 lineWidth: 3,
-                color: '#56EAC6'
+                color: '#5EA3F9' 
             }, {
                 name: 'Future',
                 lineWidth: 3,
                 data: _future,
-                color: '#5EA3F9'
+                color: '#56EAC6'
             }
         ]
     };
