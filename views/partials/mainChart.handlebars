@@ -126,28 +126,33 @@ var crunchData = function() {
 
 };
 
-var renderChart = function(moneySaved, legend) {
-    _currentLegend = legend;
-    _currentMoneySaved = moneySaved;
-
-    var year = new Date(_lastTS).getFullYear();
-
+var renderChart = function(moneySaved, legend, color) {
     _slower = [];
-
     if (moneySaved) {
+        _current = {
+            "name": legend,
+            data: _slower,
+            lineWidth: 3,
+            color: color
+        };
+        var year = new Date(_lastTS).getFullYear();
         var out = projectFuture(year, _yr + moneySaved*365, _lastTS, _data.current_balance, _slower);
     }
 
+    
+
     var settings = {
         chart: {
-            type: 'spline'
+            type: 'spline',
+            spacingLeft: 0,
+            spacingRight: 0
         },
         xAxis: {
             type: 'datetime'
         },
         yAxis: {
             title: {
-                text: 'K€'
+                text: null
             },
             plotLines: []
         },
@@ -156,20 +161,21 @@ var renderChart = function(moneySaved, legend) {
             pointFormat: '{point.x:%m.%Y}: {point.y:.2f} k€'
         },
         series: [{
-                name: 'Cash',
-                data: _cp
+                name: 'Past',
+                data: _cp,
+                lineWidth: 3,
+                color: '#56EAC6'
             }, {
                 name: 'Future',
-                data: _future
+                lineWidth: 3,
+                data: _future,
+                color: '#5EA3F9'
             }
         ]
     };
 
     if (moneySaved) {
-        settings.series.push({
-            "name": legend,
-            data: _slower
-        });
+        settings.series.push(_current);
     }
 
     $('#mainChart').highcharts(settings);
