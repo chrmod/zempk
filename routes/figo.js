@@ -5,7 +5,7 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.setHeader('Content-Type', 'application/json');
-  figo(function (tts) {
+  figo.getTransactions(function (tts) {
     res.send(JSON.stringify(tts));
   });
 });
