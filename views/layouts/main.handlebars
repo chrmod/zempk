@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>Impact</title>
 
-  <link rel="stylesheet" href="bower_components/bower-bootstrap-css/bootstrap.css">
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
   <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
   <link href="app.css" rel="stylesheet" type="text/css" />
 
@@ -15,6 +15,68 @@
 </head>
 
 <body>
-  {{{body}}}
+  <nav class="navbar">
+      <div class="container">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><img src="images/hamburger-menu.svg"/></a></li>
+          <li><a href="#"><img src="images/user.svg"/></a></li>
+
+      </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row header-row">
+        <div class="col-md-12">
+          <h1 class="text-center"><span class="green-title">Hey Michel!</span> Welcome back.</h1>
+          <h4 class="text-center">You're doing great great this month. Keep it up.</h4>
+        </div>
+      </div>
+    </div>
+  
+    <div class="colored-row">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-md-9">
+            <h3><i>Instant Win</i></h3>
+            <p>We know, we know, you love to smoke - <br/>
+            but if you quit today, your forecast will get a HUGE boost</p>
+            <p>Plus, you know you'll live long enough to enjoy millions.</p>
+          <div class="btn btn-default">See IMPAKT</div>
+
+          </div>
+        </div>
+      </div>
+    </div><!--end colored-row-->
+  
+    <div class="container">
+      <div class="row">
+        <div class="text-center">
+          <h3 class="text-center blue-title">June</h3>
+          <span class="gray">overview</span>
+        </div>
+        <hr style="color: #CCCCCC; width: 300px;" />
+        <div class="col-md-9">
+          {{> bank }}
+        </div>
+        
+        <div class="row-md-3">
+          {{> camera}}
+        </div>
+      
+      </div>
+      
+      <div class="row">
+        <div class="col-md-9">
+          {{> mainChart }}
+        </div>
+      </div>
+
+    </div>
+  
+  
+  
+    {{{body}}}
+
 </body>
 </html>

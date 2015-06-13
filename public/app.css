@@ -1,3 +1,31 @@
 body {
   font-family: 'Montserrat', sans-serif;
 }
+
+.header-row {
+  color: #CCCCCC;
+  margin-bottom: 20px; 
+}
+
+.colored-row {
+  background-color: #F97137;
+  color: #ffffff;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+}
+
+.colored-row .btn {
+ color: #F97137; 
+}
+
+.green-title {
+ color: #A9E1B7; 
+}
+
+.blue-title {
+  color: #549AF5;
+}
+
+.gray {
+ color: #CCCCCC; 
+}
