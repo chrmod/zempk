@@ -61,3 +61,34 @@ body {
 .gray {
  color: #CCCCCC; 
 }
+
+/* Progress bar */
+.progress-blue {
+  background-color: #AAC8E2;
+}
+.progress-bar-blue {
+  background-color: #5FA2F9;
+}
+
+.progress-red {
+  background-color: #FC4941;
+}
+
+.progress-bar-green {
+  background-color: #92DBA4;
+}
+
+.progress-yellow {
+  background-color: #FFC803;
+}
+
+.progress-bar-pink {
+  background-color: #F7458F;
+}
+
+.progress > span {
+  float: right;
+  color: #FFFFFF;
+  padding-right: 10px;
+}
+
