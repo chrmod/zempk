@@ -4,6 +4,7 @@
 
 #crumbs ul {
   list-style: none;
+  padding: 0px;
 }
 
 #crumbs ul li {
@@ -13,10 +14,9 @@
 #crumbs ul li a {
   display: block;
   float: left;
-  height: 50px;
   background: #EAEAEA;
   text-align: center;
-  padding: 30px 38px 0 80px;
+  padding: 9px 38px 6px 80px;
   position: relative;
   margin: 0 10px 0 0;
 
@@ -28,20 +28,20 @@
 
 #crumbs ul li a:after {
   content: "";
-  border-top: 40px solid transparent;
-  border-bottom: 40px solid transparent;
-  border-left: 40px solid #EAEAEA;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-left: 20px solid #EAEAEA;
   position: absolute;
-  right: -40px;
+  right: -20px;
   top: 0;
   z-index: 1;
 }
 
 #crumbs ul li a:before {
   content: "";
-  border-top: 40px solid transparent;
-    border-bottom: 40px solid transparent;
-    border-left: 40px solid white;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-left: 20px solid white;
   position: absolute; left: 0; top: 0;
 }
 
