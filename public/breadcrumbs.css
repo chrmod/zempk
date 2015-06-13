@@ -16,7 +16,7 @@
   float: left;
   background: #EAEAEA;
   text-align: center;
-  padding: 9px 38px 6px 80px;
+  padding: 9px 10px 6px 25px;
   position: relative;
   margin: 0 10px 0 0;
   cursor: pointer;
@@ -54,7 +54,7 @@
 }
 
 #crumbs ul li:last-child a {
-  padding-right: 80px;
+  padding-right: 10px;
   border-top-right-radius: 10px; border-bottom-right-radius: 10px;
 }
 

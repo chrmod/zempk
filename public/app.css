@@ -222,3 +222,8 @@ body {
 .big {
   font-size: 140%;
 }
+
+.description {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
