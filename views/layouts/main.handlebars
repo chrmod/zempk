@@ -12,6 +12,7 @@
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
   <script type="text/javascript" src="bower_components/highcharts/highcharts.js"></script>
   <script type="text/javascript" src="bower_components/highcharts/highcharts-more.js"></script>
+  <script type="text/javascript" src="bower_components/masonry/dist/masonry.pkgd.min.js"></script>
 </head>
 
 <body>
@@ -83,12 +84,29 @@
           {{> description }}
         </div>
       </div>
+      
+      <div class="row">
+        <div class="col-md-12">
+          {{> mansory }}
+        </div>
+      </div>
 
     </div>
+  <div class="footer"></div>
 
 
 
     {{{body}}}
+  
+  <script type="text/javascript">
+    $('.grid').masonry({
+    // options
+      itemSelector: '.grid-item',
+      columnWidth: 230,
+      gutter: 10
+
+    });
+  </script>
 
 </body>
 </html>

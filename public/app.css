@@ -3,6 +3,10 @@ body {
   position: relative;
 }
 
+.container {
+ width: 760px; 
+}
+
 .icons {
   position: absolute;
   top: -5px;
@@ -91,4 +95,102 @@ body {
   color: #FFFFFF;
   padding-right: 10px;
 }
+
+.footer {
+ margin-bottom: 100px; 
+}
+
+/* mansory */
+.grid-item { 
+  width: 230px;
+  height: 100px;
+}
+.grid-item--width2 { 
+  width: 230px;
+  height: 200px;
+  background-color: #FF951D;
+
+}
+
+.light-blue-box {
+  background-color: #2FC4FC;
+}
+
+.red-box {
+  background-color: #E92107;
+}
+
+.orange-box {
+  background-color: #FF951D;
+}
+
+.blue-box {
+ background-color: #294696; 
+}
+
+.green-box {
+ background-color: #92DBA4; 
+}
+
+.purple-box {
+ background-color: #9177E4; 
+}
+
+.black-box {
+ background-color: #000000; 
+}
+
+.mansory {
+  color: #FFFFFF;
+}
+
+.top-box-part {
+ padding: 8px 0px; 
+}
+
+.iconContainer {
+  float: left;
+} 
+
+.textContainer {
+  float: left;
+  margin-left: 10px;
+}
+
+.ctaContainer {
+  border-top: 1px solid #fff;
+  padding: 10px 0px; 
+  text-align: center
+}
+
+.ctaContainer .btn {
+  border: 0px;
+  padding: 3px 6px;
+}
+
+.red-btn {
+  color: #E92107;
+}
+
+.light-blue-btn {
+  color: #2FC4FC;
+}
+
+.purple-btn {
+  color: #9177E4;
+}
+
+.green-btn {
+ color: #92DBA4; 
+}
+
+.black-btn {
+ color: #000000; 
+}
+
+
+.clear {
+ clear: both; 
+}
+
 
