@@ -14,7 +14,6 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "1.7",
-    "jquery-ui": "1.8"
+    "jquery": "~2.1.4"
   }
 }
