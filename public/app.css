@@ -20,13 +20,14 @@ body {
 }
 
 .tab-container .nav-tabs {
- border-bottom: 0px; 
+ border-bottom: 0px;
 }
 
 .header-row {
   color: #CCCCCC;
-  margin-bottom: 30px; 
+  margin-bottom: 30px;
   margin-top: 30px;
+  text-transform: uppercase;
 }
 
 .colored-row {
@@ -37,7 +38,7 @@ body {
 }
 
 .colored-row .btn {
- color: #F97137; 
+ color: #F97137;
 }
 
 .bank-amount {
@@ -45,7 +46,7 @@ body {
 }
 
 .amount {
- font-size: 24px; 
+ font-size: 24px;
 }
 
 .description ul {
@@ -55,7 +56,7 @@ body {
 }
 
 .green-title {
- color: #A9E1B7; 
+ color: #A9E1B7;
 }
 
 .blue-title {
@@ -63,7 +64,7 @@ body {
 }
 
 .gray {
- color: #CCCCCC; 
+ color: #CCCCCC;
 }
 
 /* Progress bar */
@@ -193,4 +194,15 @@ body {
  clear: both; 
 }
 
+.welcome i {
+  font-family: 'Lobster', cursive;
+}
 
+.welcome .btn {
+  font-size: 120%;
+  text-transform: uppercase;
+}
+
+.big {
+  font-size: 140%;
+}

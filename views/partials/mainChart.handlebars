@@ -4,8 +4,11 @@
 
 <script type="text/javascript">
 
-    var _data = null;
-    var _yr = 0, _cp = [], _future = [], _interest = 0.05;
+var _data = null;
+var _yr = 0, _cp = [], _future = [], _interest = 0.05;
+var _lastTS = 0;
+var _goal = 1000000;
+var _currentLegend = undefined, _currentMoneySaved = 0; 
 
 var fetchFigo = function () {
 
@@ -34,24 +37,43 @@ var fetchFigo = function () {
     });
 };
 
-var projectFuture = function (year, lastTS, balance, _chartPoints) {
+var addCustomTransaction = function(amount) {
+    _data.current_balance += amount;
+    _data.transactions.push({"date":Date.now(), "amount": amount});
+    crunchData();
+    renderChart(_currentMoneySaved, _currentLegend);
+}
+
+var projectFuture = function (year, yearlyIncome, lastTS, balance, _chartPoints) {
     var incompleteYear = true;
     var yearEnd = new Date(year, 11, 31, 23, 59, 59);
-    while (balance < 1000000) {
+    var loopCounter = 0;
+    var lastBalance = balance;
+    while (balance < _goal && loopCounter < 100) {
         var roi = balance * _interest;
         var savings;
+        lastBalance = balance;
         if (incompleteYear) {
             var daysLeft = (yearEnd.getTime() - lastTS) / 1000 /3600 / 24;
-            savings = (_yr * daysLeft / 365)  + roi;
+            savings = (yearlyIncome * daysLeft / 365)  + roi;
             incompleteYear = false;
         } else {
-            savings = _yr + roi;
+            savings = yearlyIncome + roi;
         }
         balance += savings;
         if (_chartPoints) {
-            _chartPoints.push([
-                new Date(year++, 11, 31, 23, 59, 59).getTime(), Math.round(balance / 10) / 100]);
+            if (balance >= _goal) {
+                var goalPercent = 1 - (balance - _goal) / (balance - lastBalance);
+                var goalTime = 365 * goalPercent;
+                var baseDate = new Date(year, 0, 0, 0, 0, 0).getTime() + (goalPercent * 1000 * 24 * 3600 * 365);
+                _chartPoints.push([
+                    baseDate, _goal / 1000]);
+            } else {
+                _chartPoints.push([
+                    new Date(year++, 11, 31, 23, 59, 59).getTime(), Math.round(balance / 10) / 100]);
+            }
         }
+        loopCounter++;
     }
 
     return {
@@ -87,34 +109,50 @@ var crunchData = function() {
     }
 
     // Calculate the date range for the whole data set
-    var firstTS = _cp[0][0], lastTS = _cp[_cp.length - 1][0];
+    var firstTS = _cp[0][0];
+    _lastTS  = _cp[_cp.length - 1][0];
     var firstBalance = _cp[0][1], lastBalance = _cp[_cp.length - 1][1];
 
-    var duration = (lastTS - firstTS) / (1000 * 3600 * 24 * 365);
+    var duration = (_lastTS - firstTS) / (1000 * 3600 * 24 * 365);
     _yr = (lastBalance - firstBalance) /  duration * 1000;
 
     // Calculate net worth and other parameters for future projection
     _future = [];
-    balance = _data.current_balance;
     _future.push(_cp[_cp.length - 1]);
 
-    var year = new Date(lastTS).getFullYear();
+    var year = new Date(_lastTS).getFullYear();
 
-    var out = projectFuture(year, lastTS, balance, _future);
+    var out = projectFuture(year, _yr, _lastTS, _data.current_balance, _future);
 
 };
 
-var renderChart = function() {
-    $('#mainChart').highcharts({
+var renderChart = function(moneySaved, legend, color) {
+    _slower = [];
+    if (moneySaved) {
+        _current = {
+            "name": legend,
+            data: _slower,
+            lineWidth: 3,
+            color: color
+        };
+        var year = new Date(_lastTS).getFullYear();
+        var out = projectFuture(year, _yr + moneySaved*365, _lastTS, _data.current_balance, _slower);
+    }
+
+    
+
+    var settings = {
         chart: {
-            type: 'spline'
+            type: 'spline',
+            spacingLeft: 0,
+            spacingRight: 0
         },
         xAxis: {
             type: 'datetime'
         },
         yAxis: {
             title: {
-                text: 'K€'
+                text: null
             },
             plotLines: []
         },
@@ -123,14 +161,24 @@ var renderChart = function() {
             pointFormat: '{point.x:%m.%Y}: {point.y:.2f} k€'
         },
         series: [{
-                name: 'Cash',
-                data: _cp
+                name: 'Past',
+                data: _cp,
+                lineWidth: 3,
+                color: '#56EAC6'
             }, {
                 name: 'Future',
-                data: _future
-            }]
-        }
-    );
+                lineWidth: 3,
+                data: _future,
+                color: '#5EA3F9'
+            }
+        ]
+    };
+
+    if (moneySaved) {
+        settings.series.push(_current);
+    }
+
+    $('#mainChart').highcharts(settings);
 };
 
 $(function() {
