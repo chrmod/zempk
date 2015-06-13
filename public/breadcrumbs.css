@@ -40,8 +40,8 @@
 #crumbs ul li a:before {
   content: "";
   border-top: 40px solid transparent;
-    border-bottom: 40px solid transparent;
-    border-left: 40px solid white;
+  border-bottom: 40px solid transparent;
+  border-left: 40px solid white;
   position: absolute; left: 0; top: 0;
 }
 
@@ -62,7 +62,7 @@
   display: none;
 }
 
-#crumbs ul li a:hover {
+#crumbs ul li a:hover, #crumbs ul li a.active {
   background: #FFC704;
 }
 
