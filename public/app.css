@@ -149,6 +149,7 @@ body {
   height: 210px;
 }
 
+
 .light-blue-box {
   background-color: #2FC4FC;
 }
@@ -269,6 +270,21 @@ body {
 
 .orange-btn {
  color: #FF951D;
+}
+
+@media (max-width: 767px) {
+  .grid-item {
+    width: 100%;
+  }
+  .grid-item--width2 {
+    width: 100%;
+  }
+  .textContainer {
+    width: 90%;
+  }
+  .height-2 {
+    height: 110px;
+  }
 }
 
 .clear {
