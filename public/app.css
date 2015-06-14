@@ -8,14 +8,17 @@ body {
 }
 
 .icons {
+  top: 40px;
   position: fixed;
   right: 40px;
   z-index: 2000;
 }
 
 .header-container {
-  padding-top: 70px;
+  padding-top: 130px;
+  padding-bottom: 50px;
  }
+
 .tab-container {
   background: #ffffff none repeat scroll 0 0;
   border-bottom: 1px solid #ccc;
