@@ -48,6 +48,7 @@ var _currentSavings = {};
 var _chart = null;
 var _mainChartMeta = null;
 var _savingsChartMeta = null;
+var _yearlyExpenses = 0;
 
 var fetchFigo = function () {
 
@@ -56,7 +57,7 @@ var fetchFigo = function () {
             _data = data;
             var fakeMonthlyIncome = function (year, startMonth, endMonth, amount) {
                 for (var month = startMonth; month <= endMonth; month++) {
-                    var thisAmount = amount * Math.random() - 0.3;
+                    var thisAmount = amount * (Math.random() - 0.3);
                     _data.current_balance += amount;
                     if (month < 10) {
                         _data.transactions.push({"date":year + "-0" + month + "-01T00:00:00.000Z", "amount": amount});
@@ -66,10 +67,24 @@ var fetchFigo = function () {
                 }
             }
 
+            var fakeMonthlyExpense = function (year, startMonth, endMonth, amount) {
+                for (var month = startMonth; month <= endMonth; month++) {
+                    _data.current_balance -= amount;
+                    if (month < 10) {
+                        _data.transactions.push({"date":year + "-0" + month + "-01T00:00:00.000Z", "amount": -amount});
+                    } else {
+                        _data.transactions.push({"date":year + "-" + month + "-01T00:00:00.000Z", "amount": -amount});
+                    }
+                }
+            }
+
             fakeMonthlyIncome(2012, 1, 12, 1300);
-            fakeMonthlyIncome(2013, 1, 12, 200);
+            fakeMonthlyIncome(2013, 1, 12, 400);
             fakeMonthlyIncome(2014, 1, 12, 1900);
             fakeMonthlyIncome(2015, 1, 5, 2000);
+            fakeMonthlyExpense(2012, 1, 12, 500);
+            fakeMonthlyExpense(2013, 1, 12, 500);
+            fakeMonthlyExpense(2014, 1, 12, 500);
             crunchData();
             renderChart();
         }
@@ -89,6 +104,7 @@ var projectFuture = function (year, yearlyIncome, lastTS, balance, _chartPoints)
     var loopCounter = 0;
     var lastBalance = balance;
     var chartEndDate = null;
+    var retirementDate = null;
     while (balance < _goal && loopCounter < 100) {
         var roi = balance * _interest;
         var savings;
@@ -102,6 +118,9 @@ var projectFuture = function (year, yearlyIncome, lastTS, balance, _chartPoints)
         }
         balance += savings;
         if (_chartPoints) {
+          if (roi > -_yearlyExpenses && !retirementDate) {
+                retirementDate = new Date(year+1, 0, 0, 0, 0, 0).getTime();
+          }
             /* if (balance >= _goldenGoal && !_chartGoldenDate) {
                 var goalPercent = 1 - (balance - _goldenGoal) / (balance - lastBalance);
                 var goalTime = 365 * goalPercent;
@@ -115,7 +134,7 @@ var projectFuture = function (year, yearlyIncome, lastTS, balance, _chartPoints)
                     chartEndDate, _goal / 1000]);
             } else {
                 _chartPoints.push([
-                    new Date(year++, 11, 31, 23, 59, 59).getTime(), Math.round(balance / 10) / 100]);
+                    new Date(year++, 11, 30, 23, 59, 59).getTime(), Math.round(balance / 10) / 100]);
             }
         }
         loopCounter++;
@@ -124,7 +143,8 @@ var projectFuture = function (year, yearlyIncome, lastTS, balance, _chartPoints)
     return {
         "balance": balance,
         "year": year,
-        "endDate": chartEndDate
+        "endDate": chartEndDate,
+        "retirementDate": retirementDate
     };
 
 }
@@ -133,6 +153,7 @@ var crunchData = function() {
 
     var balance = _data.current_balance;
     var firstDate = null, lastDate = null;
+    var expenses = 0;
 
     _cp = [];
     for (var i in _data.transactions) {
@@ -140,6 +161,9 @@ var crunchData = function() {
             var d = _data.transactions[i];
             var date = new Date(d.date);
             _cp.push([date, d.amount]);
+            if (d.amount < 0) {
+              expenses += d.amount;
+            }
         }
     }
 
@@ -161,6 +185,7 @@ var crunchData = function() {
 
     var duration = (_lastTS - firstTS) / (1000 * 3600 * 24 * 365);
     _yr = (lastBalance - firstBalance) /  duration * 1000;
+    _yearlyExpenses = expenses / duration;
 
     // Calculate net worth and other parameters for future projection
     _future = [];
@@ -270,6 +295,18 @@ var renderChart = function(moneySaved, legend, color) {
             }
         ]
     };
+
+    if (_mainChartMeta.retirementDate) {
+      settings.xAxis.plotLines.push({
+        id:"retirement",
+        value: _mainChartMeta.retirementDate,
+        color: '#FFC802',
+        width:2,
+        label: {
+                        text: "Retirement!"
+                    }
+      });
+    }
 
     if (moneySaved) {
         settings.series.push(_current);

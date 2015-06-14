@@ -1,16 +1,22 @@
 package android.impakt.de.impakt;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import net.gini.android.models.SpecificExtraction;
 import net.gini.android.vision.BitmapFuture;
@@ -55,6 +61,27 @@ public class MainActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.setLogo(R.drawable.makebank);
+
+        DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
+                this,  mDrawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close
+        );
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        mDrawerToggle.syncState();
+
+        final ImageView medalView = new ImageView(this);
+        medalView.setImageResource(R.drawable.medal);
+        medalView.setScaleType(ImageView.ScaleType.FIT_START);
+        final ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(getResources().getDimensionPixelSize(R.dimen.medal_width), LinearLayout.LayoutParams.MATCH_PARENT);
+        lp.setMargins(16, 0, 16, 16);
+
+        medalView.setLayoutParams(lp);
+        // medalView.setPadding(0, 0, 0, 0);
+
+        toolbar.addView(medalView);
     }
 
     @NotNull
@@ -158,11 +185,6 @@ public class MainActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         if (id == R.id.action_scan) {
             scanDocument();
