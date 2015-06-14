@@ -11,4 +11,6 @@
     <string name="scan_couldnt_find_price">Sorry, I couldn\'t find a price here</string>
     <string name="scan_error_">Couldn\'t scan the receipt: %s</string>
     <string name="scan_error">Couldn\'t scan the receipt</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
 </resources>
