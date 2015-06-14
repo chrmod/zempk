@@ -6,6 +6,7 @@ var figo = require('../libs/figo-transactions');
 router.get('/', function(req, res, next) {
   res.render('index', {
     title: 'Hello World!',
+    transactions: [{amount: 20, css: 'green'}, {amount: -23, css: 'red'}]
   });
 });
 

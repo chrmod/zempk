@@ -15,6 +15,18 @@ function setCrumbs(index) {
   iconBar.text(text[index-1]);
 }
 
+function calculateTransactionHeight(amount) {
+  var minHeight = 30,
+      maxHeight = 90;
+  if(amount < minHeight) {
+    return minHeight;  
+  } else if(amount > minHeight && amount < maxHeight) {
+    return amount;  
+  } else {
+    return maxHeight;  
+  }
+}
+
 $(document).ready(function () {
   $(".crumbs a").click(function (el) {
     var index = $(this).data("index");

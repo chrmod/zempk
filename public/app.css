@@ -312,8 +312,40 @@ body {
 
 .small-desc {
   margin-top: 20px;
-  text-align: center;
-  
+  text-align: center; 
+}
+
+.row.transactions {
+  margin-bottom: 80px;
+}
+
+.transaction-box {
+    float: left;
+    margin-right: 10px;
+}
+
+.transaction-box a {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #ffffff;
+    cursor: default;
+    padding: 10px 15px;
+    color: #ffffff;
+}
+
+.transaction-box .green {
+ background-color: #92DBA4;
+ border-radius: 4px 4px 0px 0px;
+
+}
+
+.transaction-box .red {
+  background-color: #FE5249;
+  border-radius: 0px 0px 4px 4px;
+  top: 37px;
+  position: relative;
 }
 
 /* Responsive */
