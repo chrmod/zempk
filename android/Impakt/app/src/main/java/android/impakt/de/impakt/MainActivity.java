@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -73,9 +74,12 @@ public class MainActivity extends ActionBarActivity {
 
         final ImageView medalView = new ImageView(this);
         medalView.setImageResource(R.drawable.medal);
-        // medalView.setScaleType(ImageView.ScaleType);
-        medalView.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.medal_width), LinearLayout.LayoutParams.MATCH_PARENT));
-        medalView.setPadding(0, 0, 64, 0);
+        medalView.setScaleType(ImageView.ScaleType.FIT_START);
+        final ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(getResources().getDimensionPixelSize(R.dimen.medal_width), LinearLayout.LayoutParams.MATCH_PARENT);
+        lp.setMargins(16, 0, 16, 16);
+
+        medalView.setLayoutParams(lp);
+        // medalView.setPadding(0, 0, 0, 0);
 
         toolbar.addView(medalView);
     }
