@@ -55,7 +55,7 @@ public class MainActivity extends ActionBarActivity {
         final WebSettings settings = mWebView.getSettings();
         // settings.setAllowUniversalAccessFromFileURLs(true);
         settings.setJavaScriptEnabled(true);
-        mWebView.loadUrl("http://172.20.128.217:3000");
+        mWebView.loadUrl("http://www.makebank.de/");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
         setSupportActionBar(toolbar);
