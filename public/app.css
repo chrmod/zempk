@@ -303,3 +303,15 @@ body {
 .carousel-indicators {
   bottom: 0px;
 }
+
+/* Responsive */
+@media (max-width: 767px) {
+  .header-container {
+    padding-top: 10px;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .header-container {
+    padding-top: 10px;
+  }
+}
