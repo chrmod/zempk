@@ -12,6 +12,7 @@
   {{> favicon }}
 
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="//cdn.jsdelivr.net/jquery.scrollto/2.1.0/jquery.scrollTo.min.js"></script>
   <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
   <script type="text/javascript" src="bower_components/highcharts/highcharts.js"></script>
   <script type="text/javascript" src="bower_components/highcharts/highcharts-more.js"></script>
@@ -26,7 +27,7 @@
 
     <div class="container header-container">
       <div class="row header-row">
-        <div class="col-md-12">
+        <div class="col-md-8 col-md-offset-2">
           <h1 class="text-center"><span class="green-title">Hey Michel!</span> Welcome back.</h1>
           <h4 class="text-center">You're doing great great this month. Keep it up.</h4>
         </div>
@@ -44,32 +45,8 @@
     </div>
       
     <div class="colored-row hidden-sm hidden-xs">
-      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner" role="listbox">
-
-          <div class="item active">
-            <div class="carousel-caption description">
-              <h3><i class="big">Instant Win</i></h3>
-              <p class="big">We know, we know, you love to smoke - <br/>
-              but if you quit today, your forecast will get a HUGE boost</p>
-              <p>Plus, you know you'll live long enough to enjoy millions.</p>
-              <div class="btn btn-default">See IMPAKT</div>
-            </div>
-          </div>
-
-          <div class="item">
-            <div class="carousel-caption description">
-              <h3><i class="big">Instant Win</i></h3>
-              <p class="big">!!!!!!!!!!! We know, we know, you love to smoke - <br/>
-              but if you quit today, your forecast will get a HUGE boost</p>
-              <p>Plus, you know you'll live long enough to enjoy millions.</p>
-              <div class="btn btn-default">See IMPAKT</div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div><!--end colored-row-->
+      {{> carousel}}
+    </div>
 
     <div class="container">
       <div class="row">
@@ -78,34 +55,36 @@
           <span class="gray">overview</span>
         </div>
         <hr style="color: #CCCCCC; width: 300px;" />
-        <div class="col-md-8">
+
+        <div class="col-md-6 col-md-offset-2">
           {{> progressbars }}
         </div>
 
-        <div class="row-md-4 text-center">
+        <div class="col-md-2 text-center">
           {{> camera}}
         </div>
 
       </div>
 
       <div class="row mainChart">
-        <div class="col-md-12">
+        <div class="col-md-8 col-md-offset-2">
           {{> mainChart }}
         </div>
       </div>
-
+      
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8 col-md-offset-2">
           {{> mansory }}
         </div>
       </div>
       
       <div class="row description">
-        <div class="col-md-12">
+        <div class="col-md-8 col-md-offset-2">
           {{> description }}
         </div>
       </div>
 
+      
     </div>
   <div class="footer"></div>
 
