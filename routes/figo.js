@@ -72,15 +72,23 @@ function UserData(accounts, trans) {
   this.toString = function ( ) { return JSON.stringify(this) };
 }
 
+// server cache
+var data;
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.setHeader('Content-Type', 'application/json');
-  figo.getTransactions(function (trans) {
-    figo.getAccounts(function (accounts) {
-      var data = new UserData(accounts, trans);
-      res.send(data);
+
+  if(data) {
+    res.send(data);
+  } else {
+    figo.getTransactions(function (trans) {
+      figo.getAccounts(function (accounts) {
+        data = new UserData(accounts, trans);
+        res.send(data);
+      });
     });
-  });
+  }
 });
 
 module.exports = router;
