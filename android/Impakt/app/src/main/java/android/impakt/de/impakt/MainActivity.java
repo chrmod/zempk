@@ -73,9 +73,9 @@ public class MainActivity extends ActionBarActivity {
 
         final ImageView medalView = new ImageView(this);
         medalView.setImageResource(R.drawable.medal);
+        // medalView.setScaleType(ImageView.ScaleType);
         medalView.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.medal_width), LinearLayout.LayoutParams.MATCH_PARENT));
-        medalView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        // medalView.setPadding(0, 0, 16, 0);
+        medalView.setPadding(0, 0, 64, 0);
 
         toolbar.addView(medalView);
     }
