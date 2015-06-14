@@ -26,8 +26,30 @@ body {
   z-index: 1000;
 }
 
+.tab-container .logo {
+  text-align: center;
+  color: #999999;
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
 .tab-container .nav-tabs {
  border-bottom: 0px;
+}
+
+.tab-container .nav-tabs > li > a {
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.nav-tabs > li > a.purple-box {
+  background-color: #9177E4;
+  color: #ffffff;
+}
+
+.nav-tabs > li > a.light-blue-box {
+  background-color: #2FC4FC;
+  color: #ffffff;
 }
 
 .header-row {
@@ -56,10 +78,25 @@ body {
  font-size: 24px;
 }
 
+.description-txt-con {
+  margin-left: 80px;
+}
+
 .description ul {
-  margin-left: 120px;
   margin-top: 20px;
-  line-height: 1.5
+  line-height: 1.5;
+  color: #666666;
+  padding: 0px;
+  margin-left: 12px;
+
+}
+
+.description p {
+  margin-top: 20px;
+}
+
+.description i {
+ font-family: "Lobster",cursive; 
 }
 
 .green-title {
@@ -140,11 +177,11 @@ body {
 }
 
 .blue-box {
- background-color: #294696; 
+ background-color: #5273D0; 
 }
 
 .green-box {
- background-color: #92DBA4; 
+ background-color: #56EAC6; 
 }
 
 .purple-box {
@@ -153,6 +190,18 @@ body {
 
 .black-box {
  background-color: #000000; 
+}
+
+.gray-box {
+  background-color: #CCCCCC;
+}
+
+.dark-gray-box {
+ background-color: #666666;
+}
+
+.pink-box {
+ background-color: #F36E8D; 
 }
 
 .mansory {
@@ -192,6 +241,11 @@ body {
   padding: 3px 6px;
 }
 
+.ctaContainer .percentage {
+  display: inline-block;
+  margin-left: 5px;
+}
+
 .red-btn {
   color: #E92107;
 }
@@ -204,14 +258,33 @@ body {
   color: #9177E4;
 }
 
+.gray-btn {
+ color: #CCCCCC; 
+}
+
 .green-btn {
- color: #92DBA4; 
+ color: #56EAC6; 
 }
 
 .black-btn {
  color: #000000; 
 }
 
+.pink-btn {
+ color: #F36E8D; 
+}
+
+.dark-gray-btn {
+ color: #666666; 
+}
+
+.blue-btn {
+ color: #5273D0; 
+}
+
+.orange-btn {
+ color: #FF951D; 
+}
 
 .clear {
  clear: both; 
