@@ -43,7 +43,7 @@ var _data = null;
 var _yr = 0, _cp = [], _future = [], _interest = 0.05;
 var _lastTS = 0;
 var _goal = 1000000, _goldenGoal = _goal * 0.62;
-var _currentLegend = undefined, _currentMoneySaved = 0; 
+var _currentLegend = undefined, _currentMoneySaved = 0;
 var _currentSavings = {};
 var _chart = null;
 var _mainChartMeta = null;
@@ -215,7 +215,7 @@ var renderChart = function(moneySaved, legend, color) {
         xAxis.removePlotBand("savings");
     } catch (e) { }
 
-    
+
 
     var settings = {
         title: {
@@ -260,7 +260,7 @@ var renderChart = function(moneySaved, legend, color) {
                 name: 'Past',
                 data: _cp,
                 lineWidth: 3,
-                color: '#5EA3F9' 
+                color: '#5EA3F9'
             }, {
                 id: 'future',
                 name: 'Future',
@@ -280,7 +280,7 @@ var renderChart = function(moneySaved, legend, color) {
 
 
 function toggleSavings(id, percent, color, legend) {
-    if (_currentSavings[id]) {
+  if (_currentSavings[id]) {
       delete _currentSavings[id];
   } else {
       _currentSavings[id] = {
@@ -302,9 +302,15 @@ function toggleSavings(id, percent, color, legend) {
       }
   }
 
-  if (savings) {
-      renderChart(savings.percent * _yr, savings.legend, savings.color);
-  } else {
-      renderChart();
-  }
+  var onAfter = function () {
+    if (savings) {
+        renderChart(savings.percent * _yr, savings.legend, savings.color);
+    } else {
+        renderChart();
+    }
+  };
+  $.scrollTo("#mainChart", 700, {
+    offset: -100,
+    onAfter: onAfter
+  })
 }
