@@ -1,5 +1,6 @@
 var express = require('express');
 var exphbs  = require('express-handlebars');
+var Handlebars = require('handlebars');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -13,7 +14,34 @@ var app = express();
 
 
 // view engine setup
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main',
+  helpers: {
+    bar: function (t) {
+      var css = t.amount > 0 ? 'green' : 'red';
+      var amount = Math.round(t.amount);
+      function calc(amount) {
+        var minHeight = 30,
+            maxHeight = 90;
+        if(amount < minHeight) {
+          return minHeight;
+        } else if(amount > minHeight && amount < maxHeight) {
+          return amount;
+        } else {
+          return maxHeight;
+        }
+      }
+      var height = calc(amount);
+      var str = [
+        '<div class="transaction-box">',
+        '<a href="#" class="'+css+'" style="height: '+height+'px">'+amount+'</a>',
+        '</div>'
+      ].join("");
+      return new Handlebars.SafeString(str);
+    }
+  }
+}));
+
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
 
