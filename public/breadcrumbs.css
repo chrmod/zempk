@@ -1,17 +1,17 @@
-#crumbs {
+.crumbs {
   text-align: center;
 }
 
-#crumbs ul {
+.crumbs ul {
   list-style: none;
   padding: 0px;
 }
 
-#crumbs ul li {
+.crumbs ul li {
   display: inline;
 }
 
-#crumbs ul li a {
+.crumbs ul li a {
   display: block;
   float: left;
   background: #EAEAEA;
@@ -26,7 +26,7 @@
   box-sizing: content-box;
 }
 
-#crumbs ul li a:after, #crumbs ul li a.active:after {
+.crumbs ul li a:after, .crumbs ul li a.active:after {
   content: "";
   border-top: 20px solid transparent;
   border-bottom: 20px solid transparent;
@@ -37,7 +37,7 @@
   z-index: 1;
 }
 
-#crumbs ul li a:before, #crumbs ul li a.active:before {
+.crumbs ul li a:before, .crumbs ul li a.active:before {
   content: "";
   border-top: 20px solid transparent;
   border-bottom: 20px solid transparent;
@@ -45,14 +45,36 @@
   position: absolute; left: 0; top: 0;
 }
 
-#crumbs ul li:first-child a {
+.crumbs ul li:first-child a {
   border-top-left-radius: 10px; border-bottom-left-radius: 10px;
 }
 
-#crumbs ul li a:hover, #crumbs ul li a.active {
+.crumbs ul li:first-child a:before, .crumbs ul li:first-child a.active:before {
+  display: none;
+}
+
+.crumbs ul li:last-child a {
+  padding-right: 10px;
+  border-top-right-radius: 10px; border-bottom-right-radius: 10px;
+}
+
+.crumbs ul li:last-child a:after, .crumbs ul li:last-child a.active:after {
+  display: none;
+}
+
+.crumbs ul li a:hover, .crumbs ul li a.active {
   background: #FFC704;
 }
 
-#crumbs ul li a:hover:after, #crumbs ul li a.active:after {
+.crumbs ul li a:hover:after, .crumbs ul li a.active:after {
   border-left-color: #FFC704;
+}
+
+.icons .crumbs {
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.icons .crumbs a.single {
+  padding-right: 25px;
 }
