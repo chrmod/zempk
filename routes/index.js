@@ -4,11 +4,8 @@ var figo = require('../libs/figo-transactions');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  figo.getTransactions(function (transactions) {
-    res.render('index', {
-      title: 'Hello World!',
-      transactions: transactions,
-    });
+  res.render('index', {
+    title: 'Hello World!',
   });
 });
 
