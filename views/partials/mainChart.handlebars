@@ -9,10 +9,10 @@ var _yr = 0, _cp = [], _future = [], _interest = 0.05;
 var _lastTS = 0;
 var _goal = 1000000, _goldenGoal = _goal * 0.62;
 var _currentLegend = undefined, _currentMoneySaved = 0; 
-var _chartEndDate = null;
-var _chartGoldenDate = null;
 var _currentSavings = {};
 var _chart = null;
+var _mainChartMeta = null;
+var _savingsChartMeta = null;
 
 var fetchFigo = function () {
 
@@ -53,7 +53,7 @@ var projectFuture = function (year, yearlyIncome, lastTS, balance, _chartPoints)
     var yearEnd = new Date(year, 11, 31, 23, 59, 59);
     var loopCounter = 0;
     var lastBalance = balance;
-    _chartGoldenDate = null;
+    var chartEndDate = null;
     while (balance < _goal && loopCounter < 100) {
         var roi = balance * _interest;
         var savings;
@@ -67,17 +67,17 @@ var projectFuture = function (year, yearlyIncome, lastTS, balance, _chartPoints)
         }
         balance += savings;
         if (_chartPoints) {
-            if (balance >= _goldenGoal && !_chartGoldenDate) {
+            /* if (balance >= _goldenGoal && !_chartGoldenDate) {
                 var goalPercent = 1 - (balance - _goldenGoal) / (balance - lastBalance);
                 var goalTime = 365 * goalPercent;
                 _chartGoldenDate = new Date(year, 0, 0, 0, 0, 0).getTime() + (goalPercent * 1000 * 24 * 3600 * 365);
-            }
+            } */
             if (balance >= _goal) {
                 var goalPercent = 1 - (balance - _goal) / (balance - lastBalance);
                 var goalTime = 365 * goalPercent;
-                _chartEndDate = new Date(year, 0, 0, 0, 0, 0).getTime() + (goalPercent * 1000 * 24 * 3600 * 365);
+                chartEndDate = new Date(year, 0, 0, 0, 0, 0).getTime() + (goalPercent * 1000 * 24 * 3600 * 365);
                 _chartPoints.push([
-                    _chartEndDate, _goal / 1000]);
+                    chartEndDate, _goal / 1000]);
             } else {
                 _chartPoints.push([
                     new Date(year++, 11, 31, 23, 59, 59).getTime(), Math.round(balance / 10) / 100]);
@@ -89,7 +89,7 @@ var projectFuture = function (year, yearlyIncome, lastTS, balance, _chartPoints)
     return {
         "balance": balance,
         "year": year,
-        "endDate": _chartEndDate
+        "endDate": chartEndDate
     };
 
 }
@@ -133,7 +133,7 @@ var crunchData = function() {
 
     var year = new Date(_lastTS).getFullYear();
 
-    var out = projectFuture(year, _yr, _lastTS, _data.current_balance, _future);
+    _mainChartMeta = projectFuture(year, _yr, _lastTS, _data.current_balance, _future);
 
 };
 
@@ -148,10 +148,22 @@ var renderChart = function(moneySaved, legend, color) {
             color: color
         };
         var year = new Date(_lastTS).getFullYear();
-        var out = projectFuture(year, _yr + moneySaved, _lastTS, _data.current_balance, _slower);
+        _savingsChartMeta = projectFuture(year, _yr + moneySaved, _lastTS, _data.current_balance, _slower);
 
         if (Highcharts.charts.length) {
             var existingSeries = Highcharts.charts[0].get("savings");
+            var xAxis = Highcharts.charts[0].xAxis[0];
+            try {
+                xAxis.removePlotBand("savings");
+            } catch (e) { }
+
+            xAxis.addPlotBand({
+                "color": "#ffd472",
+                id: "savings",
+                from: _savingsChartMeta.endDate,
+                to: _mainChartMeta.endDate
+            });
+
             if (existingSeries) {
                 existingSeries.update(_current, true, true);
                 Highcharts.charts[0].redraw();
@@ -164,11 +176,16 @@ var renderChart = function(moneySaved, legend, color) {
         }
     }
 
+    try {
+        xAxis.removePlotBand("savings");
+    } catch (e) { }
+
     
 
     var settings = {
         title: {
-            text: 'Your path to riches'
+            text: 'Your path to riches',
+            style: { "color": "#333333", "fontSize": "22px" }
         },
         chart: {
             type: 'spline',
@@ -177,11 +194,13 @@ var renderChart = function(moneySaved, legend, color) {
         },
         xAxis: {
             type: 'datetime',
+            maxPadding: 0.02,
             plotLines: [
                 {
                     color: '#FFC802',
+                    id: "million",
                     width: 2,
-                    value: _chartGoldenDate,
+                    value: _mainChartMeta.endDate,
                     label: {
                         /* text: '<a href="http://www.google.com">Million!</a>',
                         useHTML: true */
