@@ -11,6 +11,7 @@ var _goal = 1000000, _goldenGoal = _goal * 0.62;
 var _currentLegend = undefined, _currentMoneySaved = 0; 
 var _chartEndDate = null;
 var _chartGoldenDate = null;
+var _currentSavings = [];
 
 var fetchFigo = function () {
 
@@ -162,7 +163,11 @@ var renderChart = function(moneySaved, legend, color) {
                 {
                     color: '#FFC802',
                     width: 2,
-                    value: _chartGoldenDate
+                    value: _chartGoldenDate,
+                    label: {
+                        text: '<a href="http://www.google.com">Million!</a>',
+                        useHTML: true
+                    }
                 }
             ]
         },
