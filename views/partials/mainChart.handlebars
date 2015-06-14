@@ -12,6 +12,7 @@ var _currentLegend = undefined, _currentMoneySaved = 0;
 var _chartEndDate = null;
 var _chartGoldenDate = null;
 var _currentSavings = {};
+var _chart = null;
 
 var fetchFigo = function () {
 
@@ -140,6 +141,7 @@ var renderChart = function(moneySaved, legend, color) {
     _slower = [];
     if (moneySaved) {
         _current = {
+            id: 'savings',
             "name": legend,
             data: _slower,
             lineWidth: 3,
@@ -147,11 +149,27 @@ var renderChart = function(moneySaved, legend, color) {
         };
         var year = new Date(_lastTS).getFullYear();
         var out = projectFuture(year, _yr + moneySaved, _lastTS, _data.current_balance, _slower);
+
+        if (Highcharts.charts.length) {
+            var existingSeries = Highcharts.charts[0].get("savings");
+            if (existingSeries) {
+                existingSeries.update(_current, true, true);
+                Highcharts.charts[0].redraw();
+                return;
+            } else {
+                Highcharts.charts[0].addSeries(_current);
+                Highcharts.charts[0].redraw();
+                return;
+            }
+        }
     }
 
     
 
     var settings = {
+        title: {
+            text: 'Your path to riches'
+        },
         chart: {
             type: 'spline',
             spacingLeft: 0,
@@ -165,8 +183,9 @@ var renderChart = function(moneySaved, legend, color) {
                     width: 2,
                     value: _chartGoldenDate,
                     label: {
-                        text: '<a href="http://www.google.com">Million!</a>',
-                        useHTML: true
+                        /* text: '<a href="http://www.google.com">Million!</a>',
+                        useHTML: true */
+                        text: "Million!"
                     }
                 }
             ]
@@ -183,11 +202,13 @@ var renderChart = function(moneySaved, legend, color) {
             pointFormat: '{point.x:%m.%Y}: {point.y:.2f} k€'
         },
         series: [{
+                id: 'past',
                 name: 'Past',
                 data: _cp,
                 lineWidth: 3,
                 color: '#5EA3F9' 
             }, {
+                id: 'future',
                 name: 'Future',
                 lineWidth: 3,
                 data: _future,
@@ -200,7 +221,7 @@ var renderChart = function(moneySaved, legend, color) {
         settings.series.push(_current);
     }
 
-    $('#mainChart').highcharts(settings);
+    _chart = $('#mainChart').highcharts(settings);
 };
 
 $(function() {
