@@ -11,7 +11,7 @@ var _goal = 1000000, _goldenGoal = _goal * 0.62;
 var _currentLegend = undefined, _currentMoneySaved = 0; 
 var _chartEndDate = null;
 var _chartGoldenDate = null;
-var _currentSavings = [];
+var _currentSavings = {};
 
 var fetchFigo = function () {
 
@@ -214,8 +214,35 @@ $(function() {
         var percent = (+$this.attr("data-percent") / 100);
         var color = $this.attr("data-color");
         var legend = $this.attr("data-legend");
+        var id = $this.attr("data-id");
 
-        renderChart(percent * _yr, legend, color);
+        if (_currentSavings[id]) {
+            delete _currentSavings[id];
+        } else {
+            _currentSavings[id] = {
+                "percent": percent,
+                "color": color,
+                "legend": legend
+            };
+        }
+
+        var savings = null;
+
+        for (var key in _currentSavings) {
+            if (!savings) {
+                savings = $.extend({}, _currentSavings[key]);
+            } else {
+                savings.color = "#92DBA4";
+                savings.percent += _currentSavings[key].percent;
+                savings.legend += ", " + _currentSavings[key].legend;
+            }
+        }
+
+        if (savings) {
+            renderChart(savings.percent * _yr, savings.legend, savings.color);
+        } else {
+            renderChart();
+        }
     });
 });
 
