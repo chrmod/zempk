@@ -29,7 +29,7 @@
 .crumbs ul li a:after, .crumbs ul li a.active:after {
   content: "";
   border-top: 20px solid transparent;
-  border-bottom: 20px solid transparent;
+  border-bottom: 15px solid transparent;
   border-left: 20px solid #EAEAEA;
   position: absolute;
   right: -20px;
@@ -59,6 +59,8 @@
   margin-right: 10px
 }
 
-.icons .crumbs a.single {
-  padding-right: 25px;
+.crumbs a.single,
+.crumbs ul li a {
+  padding-right: 0px;
+  font-size: 14px;
 }
